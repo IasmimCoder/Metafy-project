@@ -3,6 +3,8 @@ package com.ifpb.Metafy.model;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +23,7 @@ public class User {
     private String email;
     private String password;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
 }
 

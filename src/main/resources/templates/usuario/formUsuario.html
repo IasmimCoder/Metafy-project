@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <form id="formCadastro" method="POST">
+        Nome: <input type="text" name="name"/><br>
+        Cpf: <input type="text" name="cpf"/><br>
+        Email: <input type="text" name="email"/><br>
+        Password: <input type="password" name="password"/><br>
+        Data de Criação: <input type="date" name="creationDate"/><br>
+        <button type="submit" name="action">Cadastrar</button><br>
+    </form>
+</body>
+</html>
