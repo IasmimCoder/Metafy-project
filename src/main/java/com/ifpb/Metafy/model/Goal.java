@@ -3,11 +3,13 @@ package com.ifpb.Metafy.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
 import java.util.Date;
 
 @Entity
-@Table(name = "goals")
 @Data
+@Table(name = "goals")
 @NoArgsConstructor
 public class Goal {
 
@@ -18,7 +20,8 @@ public class Goal {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
+    
+    
     private String title;
     private String description;
     private Double goalValue;
@@ -29,5 +32,6 @@ public class Goal {
 
     @Temporal(TemporalType.DATE)
     private Date deadline;
+    
 }
 
