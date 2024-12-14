@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.springframework.web.servlet.ModelAndView;
 
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -30,7 +31,15 @@ public class UserController {
     public ModelAndView createUser() {
         return new ModelAndView("usuario/formUsuario");
     }
-    
+
+
+    @PostMapping("/deletarUsuario/{id}")
+    public ModelAndView deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return new ModelAndView("redirect:/api/users/listarUsuarios"); // Redireciona para a lista de usuários
+    }
+
+
     @PostMapping("/cadastrarUsuario")
     public ModelAndView createUser(@ModelAttribute User user) {
         userService.createUser(user);
@@ -47,14 +56,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @PostMapping("/atualizarUsuario/{id}")
+    public ModelAndView updateUser(@PathVariable Long id, @ModelAttribute User user) {
+        userService.updateUser(id, user);
+        return new ModelAndView("usuario/atualizarUsuario");
     }
     
 }

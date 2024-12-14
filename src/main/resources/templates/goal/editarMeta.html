@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Meta</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <h1>Editar Meta</h1>
+    
+    <!-- Formulário para editar a meta -->
+    <form th:action="@{/api/goals/editar/{id}(id=${goal.id})}" method="POST">
+        
+        <!-- Título da Meta -->
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" th:value="${goal.title}" required>
+        <br>
+
+        <!-- Descrição da Meta -->
+        <label for="description">Descrição:</label>
+        <textarea id="description" name="description" th:value="${goal.description}" required></textarea>
+        <br>
+
+        <!-- Valor da Meta -->
+        <label for="goalValue">Valor da Meta:</label>
+        <input type="number" id="goalValue" name="goalValue" step="0.01" th:value="${goal.goalValue}" required>
+        <br>
+
+        <!-- Valor Acumulado -->
+        <label for="accumulatedValue">Valor Acumulado:</label>
+        <input type="number" id="accumulatedValue" name="accumulatedValue" step="0.01" th:value="${goal.accumulatedValue}" required>
+        <br>
+
+        <!-- Data de Início -->
+        <label for="startDate">Data de Início:</label>
+        <input type="date" id="startDate" name="startDate" th:value="${#dates.format(goal.startDate, 'yyyy-MM-dd')}" required>
+        <br>
+
+        <!-- Prazo -->
+        <label for="deadline">Prazo:</label>
+        <input type="date" id="deadline" name="deadline" th:value="${#dates.format(goal.deadline, 'yyyy-MM-dd')}" required>
+        <br>
+
+        <button type="submit">Atualizar Meta</button>
+    </form>
+</body>
+</html>

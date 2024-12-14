@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Usuário</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <h1>Atualizar Usuário</h1>
+    
+    <!-- O ID do usuário será usado para enviar a requisição correta -->
+    <form id="formAtualizacao" th:action="@{/api/users/atualizarUsuario/{id}(id=${user.id})}" method="POST">
+        <input type="hidden" name="_method" value="put"> <!-- Necessário para simular PUT -->
+        
+         <!-- Os valores default são exibidos pelo th:value -->
+         Nome: <input type="text" name="name" th:value="${user.name}" placeholder="Digite o nome"/><br>
+         Email: <input type="text" name="email" th:value="${user.email}" placeholder="Digite o email"/><br>
+        <button type="submit">Atualizar</button>
+    </form>
+</body>
+</html>
