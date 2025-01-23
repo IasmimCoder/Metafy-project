@@ -8,7 +8,6 @@ import com.ifpb.Metafy.model.Report;
 import com.ifpb.Metafy.repository.ReportRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReportService {

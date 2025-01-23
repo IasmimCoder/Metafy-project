@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Usuarios</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Email</th>
+                <th>Data de Criação</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.name}"></span></td>
+                <td><span th:text="${user.cpf}"></span></td>
+                <td><span th:text="${user.email}"></span></td>
+                <td><span th:text="${user.creationDate}"></span></td>
+                <td>
+                    <!-- Formulário para deletar usuário -->
+                    <form th:action="@{/api/users/atualizarUsuario/{id}(id=${user.id})}" method="post">
+                        <button type="submit">Atualizar</button>
+                    </form>
+                </td>
+                <td>
+                    <!-- Formulário para deletar usuário -->
+                    <form th:action="@{/api/users/deletarUsuario/{id}(id=${user.id})}" method="post" 
+                          onsubmit="return confirm('Você tem certeza que deseja deletar este usuário?');">
+                        <input type="hidden" name="_method" value="delete"> <!-- Para simular DELETE -->
+                        <button type="submit">Deletar</button>
+                    </form>
+                </td>
+                
+            </tr>
+        </tbody>        
+    </table>
+</body>
+</html>
