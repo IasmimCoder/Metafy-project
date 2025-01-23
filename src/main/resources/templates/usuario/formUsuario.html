@@ -10,10 +10,19 @@
     <form id="formCadastro" method="POST">
         Nome: <input type="text" name="name"/><br>
         Cpf: <input type="text" name="cpf"/><br>
+        Sexo: 
+        <input type="radio" id="sexo" name="sexo" value="masculino">
+        <label for="sexo">Masculino</label>
+        <input type="radio" id="sexo" name="sexo" value="feminino">
+        <label for="sexo">Feminino</label><br>
         Email: <input type="text" name="email"/><br>
         Password: <input type="password" name="password"/><br>
         Data de Criação: <input type="date" name="creationDate"/><br>
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">Autorizo o uso dos meus dados pessoais conforme os termos e condições</label><br>
+
         <button type="submit" name="action">Cadastrar</button><br>
+
     </form>
 </body>
 </html>
