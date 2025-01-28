@@ -22,6 +22,7 @@ public class User {
     private String cpf;
     private String email;
     private String password;
+    private String sexo;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
