@@ -7,6 +7,7 @@
 </head>
 <body>
     <a href="/">Home</a>
+    <h1>Lista de Usuários</h1>
     <table border="1">
         <thead>
             <tr>
@@ -20,14 +21,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${userPage.content}">
                 <td><span th:text="${user.name}"></span></td>
                 <td><span th:text="${user.cpf}"></span></td>
                 <td><span th:text="${user.email}"></span></td>
                 <td><span th:text="${user.sexo}"></span></td>
                 <td><span th:text="${user.creationDate}"></span></td>
                 <td>
-                    <!-- Formulário para deletar usuário -->
+                    <!-- Formulário para atualizar usuário -->
                     <form th:action="@{/api/users/atualizarUsuario/{id}(id=${user.id})}" method="post">
                         <button type="submit">Atualizar</button>
                     </form>
@@ -42,7 +43,16 @@
                 </td>
                 
             </tr>
-        </tbody>        
+        </tbody>  
     </table>
+    <!-- Paginação -->
+    <div>
+        <span th:if="${userPage.hasPrevious()}">
+            <a th:href="@{/api/users/usuarios(page=${userPage.number - 1}, size=${userPage.size})}">Página Anterior</a>
+        </span>
+        <span th:if="${userPage.hasNext()}">
+            <a th:href="@{/api/users/usuarios(page=${userPage.number + 1}, size=${userPage.size})}">Próxima Página</a>
+        </span>
+    </div>
 </body>
 </html>

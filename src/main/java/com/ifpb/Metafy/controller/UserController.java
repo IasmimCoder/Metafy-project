@@ -46,6 +46,16 @@ public class UserController {
         return userPage.getContent();
     }
 
+    @GetMapping("/usuarios")
+    public ModelAndView exibirUsuarios(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "5") int size, Model model) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userPage = userService.getUsers(pageable);  
+        
+        model.addAttribute("userPage", userPage);
+        return new ModelAndView("usuario/listarUsuarios"); // Nome do arquivo HTML
+    }
+
     
     @GetMapping("/showIndex")
     public ModelAndView showIndex(Model model) {
@@ -63,7 +73,7 @@ public class UserController {
     @PostMapping("/deletarUsuario/{id}")
     public ModelAndView deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ModelAndView("redirect:/api/users/listarUsuarios"); // Redireciona para a lista de usuários
+        return new ModelAndView("redirect:/api/users/usuarios"); // Redireciona para a lista de usuários
     }
 
 
