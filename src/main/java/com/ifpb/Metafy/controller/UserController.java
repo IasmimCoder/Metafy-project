@@ -1,9 +1,11 @@
 package com.ifpb.Metafy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.ifpb.Metafy.dto.UserDTO;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.service.UserService;
 
@@ -12,6 +14,9 @@ import java.util.Optional;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,13 +25,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    
     @GetMapping("/listarUsuarios")
+    public ResponseEntity<Page<UserDTO>> getPaginatedUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String sort) {
+        Pageable pageable = (sort != null) ? PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sort)) 
+                                           : PageRequest.of(page, size);
+        Page<UserDTO> users = userService.getUsersDTO(pageable);
+        return ResponseEntity.ok(users);
+    }
+    
+    @GetMapping("/showIndex")
     public ModelAndView showIndex(Model model) {
         List<User> users = userService.getAllUsers();  
         model.addAttribute("users", users);  
         return new ModelAndView("usuario/listarUsuarios"); 
     }
+
     @GetMapping("/cadastrarUsuario")
     public ModelAndView createUser() {
         return new ModelAndView("usuario/formUsuario");
