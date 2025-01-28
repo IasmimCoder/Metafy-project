@@ -22,9 +22,7 @@ public class UserService {
 
     //funciona??
 
-    public Page<User> getUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
-    }
+    
 
     public Page<UserDTO> getUsersDTO(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
@@ -36,6 +34,11 @@ public class UserService {
     }
 
     //funciona??
+
+   
+    public Page<User> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

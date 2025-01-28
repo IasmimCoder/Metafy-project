@@ -25,16 +25,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // @GetMapping("/listarUsuarios")
+    // public ResponseEntity<Page<UserDTO>> getPaginatedUsers(
+    //         @RequestParam(defaultValue = "0") int page,
+    //         @RequestParam(defaultValue = "10") int size,
+    //         @RequestParam(required = false) String sort) {
+    //     Pageable pageable = (sort != null) ? PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sort)) 
+    //                                        : PageRequest.of(page, size);
+    //     Page<UserDTO> users = userService.getUsersDTO(pageable);
+    //     return ResponseEntity.ok(users);
+    // }
+
     @GetMapping("/listarUsuarios")
-    public ResponseEntity<Page<UserDTO>> getPaginatedUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String sort) {
-        Pageable pageable = (sort != null) ? PageRequest.of(page, size, org.springframework.data.domain.Sort.by(sort)) 
-                                           : PageRequest.of(page, size);
-        Page<UserDTO> users = userService.getUsersDTO(pageable);
-        return ResponseEntity.ok(users);
+    public List<User> listarUsuarios(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userPage = userService.getUsers(pageable);
+        
+        // Aqui, você retorna a lista de usuários sem as informações de paginação
+        return userPage.getContent();
     }
+
     
     @GetMapping("/showIndex")
     public ModelAndView showIndex(Model model) {
