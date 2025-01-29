@@ -2,6 +2,7 @@ package com.ifpb.Metafy.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,5 +27,8 @@ public class User {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date creationDate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Goal> goals;
 }
 
