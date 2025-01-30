@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Metas</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <h1>Listagem de Metas</h1>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo center">Metafy</a>
+            <ul class="left hide-on-med-and-down">
+                <li><a href="/" class="waves-effect waves-light btn"><i class="material-icons left">chevron_left</i>
+                        Home</a></li>
+                <li><a href="/api/users/usuarios" class="waves-effect waves-light btn"><i
+                            class="material-icons left">account_circle</i>Listar usuarios</a><br></li>
+                <li><a href="/api/goals/listar" class="waves-effect waves-light btn"><i
+                            class="material-icons left">account_balance_wallet</i>Listar Metas</a></li>
+            </ul>
+        </div>
+    </nav>
+    <h3 class="center-align">Listagem de Metas</h3>
 
-    <a href="/api/goals/cadastrar">Cadastrar Nova Meta</a>
+    <a href="/api/goals/cadastrar" class="waves-effect waves-light btn">Cadastrar Nova Meta</a>
     <br><br>
 
-    <table border="1">
+    <table class="striped centered highlight responsive-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -38,18 +57,19 @@
                 <td th:text="${#dates.format(goal.deadline, 'dd/MM/yyyy')}"></td>
                 <td>
                     <form th:action="@{/api/goals/editar/{id}(id=${goal.id})}" method="get">
-                        <button type="submit">Editar</button>
+                        <button type="submit" class="waves-effect waves-light btn">Editar</button>
                     </form>
 
                     <form th:action="@{/api/goals/deletar/{id}(id=${goal.id})}" method="post"
                        onsubmit="return confirm('Tem certeza que deseja excluir esta meta?');">
                        <input type="hidden" name="_method" value="delete"> <!-- Para simular DELETE -->
-                        <button type="submit">Deletar</button>
+                        <button type="submit" class="waves-effect waves-light btn">Deletar</button>
                     </form>
                 </td>
             </tr>
         </tbody>
     </table>
-    
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
 </html>
