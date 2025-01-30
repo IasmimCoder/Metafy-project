@@ -80,7 +80,7 @@ public class UserController {
     @PostMapping("/cadastrarUsuario")
     public ModelAndView createUser(@ModelAttribute User user) {
         userService.createUser(user);
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/{id}")
