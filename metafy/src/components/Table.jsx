@@ -7,6 +7,9 @@ const Table = ({ data, onEdit, onDelete }) => {
         <tr>
           <th>ID</th>
           <th>Nome</th>
+          <th>Descrição</th>
+          <th>Tipo</th>
+          <th>Data</th>
           <th>Valor</th>
           <th>Ações</th>
         </tr>
@@ -17,6 +20,9 @@ const Table = ({ data, onEdit, onDelete }) => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.title}</td>
+              <td>{item.description}</td>
+              <td>{item.type}</td>
+              <td>{item.date}</td>
               <td>R$ {item.value}</td>
               <td>
                 <button onClick={() => onEdit(item.id)}>Editar</button>

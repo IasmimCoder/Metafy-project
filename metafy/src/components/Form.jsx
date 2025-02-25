@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Form = ({ onSubmit, initialData, categories }) => {
-  const [formData, setFormData] = useState({ title: '', value: '', category: null });
+  const [formData, setFormData] = useState({ title: '', value: '', description: '', type : '', date: null, category: null });
   const [categorias, setCategorias] = useState([]); // Estado para armazenar as categorias
   const [loading, setLoading] = useState(true); // Para verificar se os dados estão sendo carregados
   const [error, setError] = useState(null); // Para lidar com possíveis erros na requisição
@@ -90,6 +90,30 @@ const Form = ({ onSubmit, initialData, categories }) => {
         type="text"
         name="title"
         value={formData.title}
+        onChange={handleChange}
+        required
+      />
+      <label>Descrição:</label>
+      <input
+        type="text"
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        required
+      />
+      <label>Tipo:</label>
+      <input
+        type="text"
+        name="type"
+        value={formData.type}
+        onChange={handleChange}
+        required
+      />
+      <label>Data:</label>
+      <input
+        type="date"
+        name="date"
+        value={formData.date}
         onChange={handleChange}
         required
       />
