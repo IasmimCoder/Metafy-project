@@ -10,7 +10,7 @@ import CategoriaCreatePage from "./pages/CategoriaCreatePage";
 import EditPage from "./pages/EditPage";
 import ListCategoryPage from "./pages/ListCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
-import "bootswatch/dist/minty/bootstrap.min.css";
+import "bootswatch/dist/united/bootstrap.min.css";
 
 const App = () => {
   const [items, setItems] = useState([]);
