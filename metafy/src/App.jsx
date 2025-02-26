@@ -11,6 +11,8 @@ import CategoriaCreatePage from './pages/CategoriaCreatePage'
 import EditPage from './pages/EditPage';
 import ListCategoryPage from "./pages/ListCategoryPage"
 import EditCategoryPage from "./pages/EditCategoryPage"
+import "bootswatch/dist/cerulean/bootstrap.min.css";
+
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -57,5 +59,6 @@ const App = () => {
     </div>
   );
 };
+<h1 className="text-3xl font-bold text-blue-500">Olá, Tailwind!</h1>
 
 export default App;
