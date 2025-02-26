@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Table from '../components/Table';
+import Table from '../components/TableCategory';
 import api from '../services/api';
 
 const ListPage = () => {
@@ -11,7 +11,7 @@ const ListPage = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await api.get('/transactions');
+        const response = await api.get('/categories');
         setItems(response.data);
       } catch (error) {
         console.error('Erro ao buscar transações:', error);
@@ -22,12 +22,12 @@ const ListPage = () => {
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/transactions/edit/${id}`);
+    navigate(`/categories/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/transactions/${id}`);
+      await api.delete(`/categories/${id}`);
       setItems(items.filter((item) => item.id !== id));
     } catch (error) {
       console.error('Erro ao deletar transação:', error);
@@ -36,7 +36,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <h2>Lista de Transações</h2>
+      <h2>Lista de Categorias</h2>
       <Table data={items} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );

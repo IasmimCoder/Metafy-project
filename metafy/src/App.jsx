@@ -9,6 +9,8 @@ import ListPage from './pages/ListPage';
 import CreatePage from './pages/CreatePage';
 import CategoriaCreatePage from './pages/CategoriaCreatePage'
 import EditPage from './pages/EditPage';
+import ListCategoryPage from "./pages/ListCategoryPage"
+import EditCategoryPage from "./pages/EditCategoryPage"
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -38,6 +40,7 @@ const App = () => {
       <nav style={{ padding: '10px', display: 'flex', gap: '10px' }}>
         <Link to="/">Home</Link>
         <Link to="/createTransaction">Adicionar Transação</Link>
+        <Link to="/categories">Listar Categorias</Link>
         <Link to="/categories/create">Adicionar Categoria</Link>
       </nav>
       <h1>Gerenciar Transações</h1>
@@ -45,8 +48,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<ListPage />} />
         <Route path="/createTransaction" element={<CreatePage />} />
+        <Route path="/categories" element={<ListCategoryPage />} />
         <Route path="/categories/create" element={<CategoriaCreatePage />}/>
-        <Route path="/edit/:id" element={<EditPage />} />
+        <Route path="/transactions/edit/:id" element={<EditPage />} />
+        <Route path="/categories/edit/:id" element={<EditCategoryPage />} />
       </Routes>
       <Footer />
     </div>

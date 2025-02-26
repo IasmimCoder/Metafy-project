@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Form from '../components/Form';
+import FormCategoria from '../components/FormCategoria';
 import api from '../services/api';
 
-const EditPage = () => {
+const EditCategoryPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initialData, setInitialData] = useState(null);
@@ -15,7 +15,7 @@ const EditPage = () => {
     // Aqui você faz a requisição para a API usando o id
     const fetchData = async () => {
       try {
-        const response = await api.get('/transactions/' + id);
+        const response = await api.get('/categories/' + id);
         const data = response;
         setInitialData(data); // Definindo os dados recebidos da API
         setLoading(false); // Definindo o estado de carregamento como falso
@@ -30,7 +30,7 @@ const EditPage = () => {
 
   const handleSubmit = async (data) => {
     // Aqui você pode enviar os dados para a API para salvar as mudanças
-    const response = await api.put(`/transactions/edit/${id}`, data)
+    const response = await api.put(`/categories/edit/${id}`, data)
     navigate('/');
   };
 
@@ -44,9 +44,9 @@ const EditPage = () => {
 
   return (
     <div>
-      <h2>Editar Transação</h2>
+      <h2>Editar Categoria</h2>
       {initialData ? (
-        <Form onSubmit={handleSubmit} initialData={initialData} />
+        <FormCategoria onSubmit={handleSubmit} initialData={initialData} />
       ) : (
         <p>Item não encontrado.</p>
       )}
@@ -54,4 +54,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default EditCategoryPage;
