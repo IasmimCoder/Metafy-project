@@ -89,22 +89,25 @@ const Form = ({ onSubmit, initialData, categories }) => {
         name="title"
         value={formData.title}
         onChange={handleChange}
+        className="form-control"
         required
-      />
+        />
       <label>Descrição:</label>
       <input
         type="text"
         name="description"
         value={formData.description}
         onChange={handleChange}
+        className="form-control"
         required
-      />
+        />
       <label>Tipo:</label>
       <input
         type="text"
         name="type"
         value={formData.type}
         onChange={handleChange}
+        className="form-control"
         required
       />
       <label>Data:</label>
@@ -113,6 +116,7 @@ const Form = ({ onSubmit, initialData, categories }) => {
         name="date"
         value={formData.date}
         onChange={handleChange}
+        className="form-control"
         required
       />
 
@@ -122,14 +126,16 @@ const Form = ({ onSubmit, initialData, categories }) => {
         name="value"
         value={formData.value}
         onChange={handleChange}
+        className="form-control"
         required
       />
 
-      <label>Categoria:</label>
+      <label className="form-label mt-4">Categoria:</label>
       <select
         name="category"
         value={selectedCategoryId}
         onChange={handleCategoryChange}
+        className="form-select"
         required
       >
         <option value="">Selecione uma categoria</option>
@@ -140,7 +146,7 @@ const Form = ({ onSubmit, initialData, categories }) => {
         ))}
       </select>
 
-      <button type="submit">Salvar</button>
+      <button type="submit" className="btn btn-primary">Salvar</button>
     </form>
   );
 };

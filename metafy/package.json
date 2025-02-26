@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.7.9",
-    "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",
     "metafy": "file:",
     "react": "^19.0.0",
