@@ -2,86 +2,84 @@ import React, { useState, useEffect } from 'react';
 
 const Form = ({ onSubmit, initialData, categories }) => {
   const [formData, setFormData] = useState({ title: '', value: '', description: '', type : '', date: null, category: null });
-  const [categorias, setCategorias] = useState([]); // Estado para armazenar as categorias
-  const [loading, setLoading] = useState(true); // Para verificar se os dados estão sendo carregados
-  const [error, setError] = useState(null); // Para lidar com possíveis erros na requisição
-  const [selectedCategoryId, setSelectedCategoryId] = useState(''); // Estado para armazenar o ID da categoria selecionada
+  const [categorias, setCategorias] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  const [selectedCategoryId, setSelectedCategoryId] = useState(''); 
 
-  // Função para lidar com o evento de mudança na categoria
+
   const handleCategoryChange = (e) => {
-    const selectedCategoryId = e.target.value; // Pega o ID da categoria selecionada
-    setSelectedCategoryId(selectedCategoryId); // Atualiza o ID da categoria no estado
+    const selectedCategoryId = e.target.value; 
+    setSelectedCategoryId(selectedCategoryId); 
   };
 
-  // Carregar categorias quando o componente for montado
+
   useEffect(() => {
-    fetch('http://localhost:8080/api/categories') // Substitua pela URL do seu backend
+    fetch('http://localhost:8080/api/categories') 
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
-          setCategorias(data); // Supondo que a resposta seja um array de categorias
+          setCategorias(data); 
         } else if (data.categorias) {
-          setCategorias(data.categorias); // Caso o array esteja dentro de uma chave "categorias"
+          setCategorias(data.categorias); 
         }
-        setLoading(false); // Dados carregados
+        setLoading(false);
       })
       .catch((err) => {
         setError('Erro ao carregar categorias');
-        setLoading(false); // Dados carregados, mas com erro
+        setLoading(false);
       });
   }, []);
 
-  // Atualiza os dados do formulário quando o `initialData` for passado
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
       if (initialData.category) {
-        setSelectedCategoryId(initialData.category.id); // Sincroniza com o ID da categoria
+        setSelectedCategoryId(initialData.category.id);
       }
     }
   }, [initialData]);
 
-  // Função para lidar com as mudanças no formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Função para enviar os dados do formulário
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Verificar se a categoria foi selecionada
+
     if (!selectedCategoryId) {
       alert('Por favor, selecione uma categoria!');
       return;
     }
 
-    // Vamos logar para ver o que está acontecendo
-    console.log('selectedCategoryId:', selectedCategoryId); // Verifique o valor de selectedCategoryId
-    console.log('categorias:', categorias); // Veja as categorias disponíveis
 
-    // Encontra o objeto completo da categoria a partir do selectedCategoryId
+    console.log('selectedCategoryId:', selectedCategoryId);
+    console.log('categorias:', categorias);
+
+
     const selectedCategory = categorias.find(
-      (cat) => String(cat.id) === String(selectedCategoryId) // Convertendo ambos para string para garantir a correspondência
+      (cat) => String(cat.id) === String(selectedCategoryId)
     );
 
-    // Se não encontrou a categoria, mostra erro
+
     if (!selectedCategory) {
       alert('Categoria inválida!');
       console.log('Categoria não encontrada', selectedCategoryId);
       return;
     }
 
-    // Envia os dados do formulário, incluindo o objeto completo da categoria
+
     onSubmit({
       ...formData,
-      category: selectedCategory, // Passa o objeto completo da categoria
+      category: selectedCategory,
     });
   };
 
-  if (loading) return <p>Carregando categorias...</p>; // Exibe "Carregando" enquanto espera os dados
-  if (error) return <p>{error}</p>; // Exibe erro caso a requisição falhe
+  if (loading) return <p>Carregando categorias...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -130,7 +128,7 @@ const Form = ({ onSubmit, initialData, categories }) => {
       <label>Categoria:</label>
       <select
         name="category"
-        value={selectedCategoryId} // Agora está sincronizado com o ID da categoria
+        value={selectedCategoryId}
         onChange={handleCategoryChange}
         required
       >
