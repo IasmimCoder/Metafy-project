@@ -43,7 +43,7 @@ const EditCategoryPage = () => {
   }
 
   return (
-    <div>
+    <div className='container  flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Editar Categoria</h2>
       {initialData ? (
         <FormCategoria onSubmit={handleSubmit} initialData={initialData} />

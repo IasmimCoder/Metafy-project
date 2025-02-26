@@ -43,7 +43,7 @@ const EditPage = () => {
   }
 
   return (
-    <div>
+    <div className='container d-flex flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Editar Transação</h2>
       {initialData ? (
         <Form onSubmit={handleSubmit} initialData={initialData} />

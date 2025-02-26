@@ -17,7 +17,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='container flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Adicionar Nova Categoria</h2>
       <FormCategoria onSubmit={handleCreate} /> {/* Corrigido: Passando a função correta */}
     </div>
