@@ -17,7 +17,7 @@ const CreatePage = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Adicionar Nova Categoria</h2>
       <FormCategoria onSubmit={handleCreate} /> {/* Corrigido: Passando a função correta */}
     </div>

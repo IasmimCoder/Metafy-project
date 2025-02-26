@@ -2,7 +2,7 @@ import React from 'react';
 
 const Table = ({ data, onEdit, onDelete }) => {
   return (
-    <table border="1" width="100%" style={{ marginTop: '20px', textAlign: 'left' }}>
+    <table className="table table-hover">
       <thead>
         <tr>
           <th>ID</th>
@@ -14,13 +14,13 @@ const Table = ({ data, onEdit, onDelete }) => {
       <tbody>
         {data.length > 0 ? (
           data.map((item) => (
-            <tr key={item.id}>
+            <tr key={item.id} className="table-default">
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.description}</td>
               <td>
-                <button onClick={() => onEdit(item.id)}>Editar</button>
-                <button onClick={() => onDelete(item.id)}>Excluir</button>
+                <button className="btn btn-info" onClick={() => onEdit(item.id)}>Editar</button>
+                <button className="btn btn-info" onClick={() => onDelete(item.id)}>Excluir</button>
               </td>
             </tr>
           ))

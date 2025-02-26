@@ -35,7 +35,7 @@ const ListPage = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Lista de Categorias</h2>
       <Table data={items} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
