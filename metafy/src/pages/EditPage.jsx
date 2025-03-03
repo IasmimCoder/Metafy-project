@@ -31,7 +31,7 @@ const EditPage = () => {
   const handleSubmit = async (data) => {
     // Aqui você pode enviar os dados para a API para salvar as mudanças
     const response = await api.put(`/transactions/edit/${id}`, data)
-    navigate('/');
+    navigate('/home');
   };
 
   if (loading) {
