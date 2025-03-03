@@ -11,10 +11,20 @@ import EditPage from "./pages/EditPage";
 import ListCategoryPage from "./pages/ListCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
 import "bootswatch/dist/lux/bootstrap.min.css";
+import CreateMeta from "./pages/CreateMeta";
+import Login from "./components/Login";
+import Home from "./pages/Home";
 
 const App = () => {
   const [items, setItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = (formData) => {
+    // Aqui você pode adicionar a lógica de autenticação, se necessário.
+    // Suponhamos que a autenticação tenha sido bem-sucedida:
+    setIsAuthenticated(true);
+  };
 
   const handleAddOrUpdate = (data) => {
     if (editingItem) {
@@ -39,56 +49,18 @@ const App = () => {
   };
 
   return (
-    <div classname="container d-flex flex-column justify-content-center align-items-center vh-100">
-      <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            Metafy - Gestão Financeira
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarColor01"
-            aria-controls="navbarColor01"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarColor01">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/createTransaction">
-                  Adicionar Transação
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/categories">
-                  Listar Categorias
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/categories/create">
-                  Adicionar Categoria
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div>
+      {!isAuthenticated ? (
+          <Login onSubmit={handleLogin} />
+        ) : (
+          <Routes>
+            <Route path="/*" element={<Home />} />
+          </Routes>
+      )}
 
-      <Routes>
-        <Route path="/" element={<ListPage />} />
-        <Route path="/createTransaction" element={<CreatePage />} />
-        <Route path="/categories" element={<ListCategoryPage />} />
-        <Route path="/categories/create" element={<CategoriaCreatePage />} />
-        <Route path="/transactions/edit/:id" element={<EditPage />} />
-        <Route path="/categories/edit/:id" element={<EditCategoryPage />} />
-      </Routes>
-      <Footer />
     </div>
   );
 };
 
 export default App;
+

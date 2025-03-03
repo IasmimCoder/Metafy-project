@@ -6,8 +6,8 @@ const Form = ({ onSubmit, initialData, categories }) => {
     value: "",
     description: "",
     type: "",
-    date: null,
-    category: null,
+    date: "",
+    category: "",
   });
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);

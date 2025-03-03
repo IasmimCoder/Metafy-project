@@ -1,55 +1,25 @@
-// src/pages/LoginPage.js
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Login from '../components/Login';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aqui você pode adicionar a lógica de autenticação (verificação com backend, por exemplo)
-    if (username === 'admin' && password === '123456') {
-      // Se o login for bem-sucedido, redireciona para a página principal
-      navigate('/');
-    } else {
-      setError('Credenciais inválidas');
+  const handleCreate = async (data) => {
+    try {
+      navigate('/'); // Redireciona para a lista após a criação
+    } catch (error) {
+      console.error('Erro ao criar transação:', error);
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
+    <div className='container flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Usuário</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Entrar</button>
-      </form>
+      <Login onSubmit={handleCreate} />
     </div>
   );
 };
 
-export default LoginPage;
+export default CreatePage;

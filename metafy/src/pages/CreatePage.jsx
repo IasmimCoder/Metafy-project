@@ -14,7 +14,7 @@ const CreatePage = () => {
   const handleCreate = async (data) => {
     try {
       await api.post('/transactions', data);
-      navigate('/'); // Redireciona para a lista após a criação
+      navigate('/home/'); // Redireciona para a lista após a criação
     } catch (error) {
       console.error('Erro ao criar transação:', error);
     }
