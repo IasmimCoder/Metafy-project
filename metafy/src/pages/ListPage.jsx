@@ -22,7 +22,7 @@ const ListPage = () => {
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/transactions/edit/${id}`);
+    navigate(`/home/transactions/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
