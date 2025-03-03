@@ -72,11 +72,11 @@ const Home = () => {
                   Adicionar Categoria
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/home/goals/create">
                   Adicionar Meta
                 </Link>
-              </li>
+              </li> Será implementado quando houver a parte de autenticação. eta necessita de usuário */}
             </ul>
           </div>
         </div>
