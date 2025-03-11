@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 
 const Login = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -24,6 +24,13 @@ const Login = ({ onSubmit, initialData }) => {
     // Navega para a página de listagem após o login
     navigate("/home");
   };
+  const handleCreate = async (data) => {
+      try {
+        navigate('/cadastro'); // Redireciona para a lista após a criação
+      } catch (error) {
+        console.error('Erro ao criar transação:', error);
+      }
+    };
 
   return (
     <div>
@@ -74,6 +81,7 @@ const Login = ({ onSubmit, initialData }) => {
           Login
         </button>
       </form>
+      <form><button className="btn btn-info" onClick={handleCreate}>Cadastrar</button></form>
       </div>
     </div>
   );

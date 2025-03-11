@@ -14,10 +14,9 @@ import "bootswatch/dist/lux/bootstrap.min.css";
 import CreateMeta from "./pages/CreateMeta";
 import Login from "./components/Login";
 import Home from "./pages/Home";
+import UserRegistration from "./pages/UserRegistration";
 
 const App = () => {
-  const [items, setItems] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = (formData) => {
@@ -26,41 +25,23 @@ const App = () => {
     setIsAuthenticated(true);
   };
 
-  const handleAddOrUpdate = (data) => {
-    if (editingItem) {
-      setItems(
-        items.map((item) =>
-          item.id === editingItem.id ? { ...item, ...data } : item
-        )
-      );
-      setEditingItem(null);
-    } else {
-      setItems([...items, { ...data, id: Date.now() }]);
-    }
-  };
-
-  const handleEdit = (id) => {
-    const itemToEdit = items.find((item) => item.id === id);
-    setEditingItem(itemToEdit);
-  };
-
-  const handleDelete = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
-
   return (
     <div>
-      {!isAuthenticated ? (
-          <Login onSubmit={handleLogin} />
-        ) : (
-          <Routes>
-            <Route path="/*" element={<Home />} />
-          </Routes>
-      )}
+      <Routes>
+        {/* Rota de Cadastro sempre acessível */}
+        <Route path="/cadastro" element={<UserRegistration />} />
 
+        {/* Se não estiver autenticado, exibe Login */}
+        {!isAuthenticated ? (
+          <Route path="/*" element={<Login onSubmit={handleLogin} />} />
+        ) : (
+          <>
+            <Route path="/*" element={<Home />} />
+          </>
+        )}
+      </Routes>
     </div>
   );
 };
 
 export default App;
-

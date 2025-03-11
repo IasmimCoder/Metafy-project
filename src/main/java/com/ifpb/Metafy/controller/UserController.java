@@ -1,11 +1,11 @@
 package com.ifpb.Metafy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ifpb.Metafy.dto.UserDTO;
+
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.service.UserService;
 
@@ -47,13 +47,12 @@ public class UserController {
     }
 
     @GetMapping("/usuarios")
-    public ModelAndView exibirUsuarios(@RequestParam(defaultValue = "0") int page,
+    public Page<User> exibirUsuarios(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "5") int size, Model model) {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> userPage = userService.getUsers(pageable);  
         
-        model.addAttribute("userPage", userPage);
-        return new ModelAndView("usuario/listarUsuarios"); // Nome do arquivo HTML
+        return userPage;
     }
 
     
@@ -78,7 +77,7 @@ public class UserController {
 
 
     @PostMapping("/cadastrarUsuario")
-    public ModelAndView createUser(@ModelAttribute User user) {
+    public ModelAndView createUser(@RequestBody User user) {
         userService.createUser(user);
         return new ModelAndView("redirect:/");
     }
@@ -94,7 +93,7 @@ public class UserController {
     }
 
     @PostMapping("/atualizarUsuario/{id}")
-    public ModelAndView updateUser(@PathVariable Long id, @ModelAttribute User user) {
+    public ModelAndView updateUser(@PathVariable Long id, @RequestBody User user) {
         userService.updateUser(id, user);
         return new ModelAndView("usuario/atualizarUsuario");
     }
