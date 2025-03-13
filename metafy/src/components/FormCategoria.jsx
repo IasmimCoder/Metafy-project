@@ -24,12 +24,12 @@ const Form = ({ onSubmit, initialData }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>Nome:</label>
-      <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+      <input className="form-control mb-3" type="text" name="name" value={formData.name} onChange={handleChange} required />
 
       <label>Descrição:</label>
-      <input type='text' name="description" value={formData.description} onChange={handleChange} required />
+      <input className="form-control mb-3" type='text' name="description" value={formData.description} onChange={handleChange} required />
 
-      <button type="submit">Salvar</button>
+      <button className="btn btn-primary " type="submit">Salvar</button>
     </form>
   );
 };

@@ -27,8 +27,8 @@ const Table = ({ data, onEdit, onDelete }) => {
               <td>{item.date}</td>
               <td>R$ {item.value}</td>
               <td>
-                <button onClick={() => onEdit(item.id)}>Editar</button>
-                <button onClick={() => onDelete(item.id)}>Excluir</button>
+                <button className="btn btn-info" onClick={() => onEdit(item.id)}>Editar</button>
+                <button className="btn btn-info" onClick={() => onDelete(item.id)}>Excluir</button>
               </td>
             </tr>
           ))

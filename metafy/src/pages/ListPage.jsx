@@ -22,7 +22,7 @@ const ListPage = () => {
   }, []);
 
   const handleEdit = (id) => {
-    navigate(`/transactions/edit/${id}`);
+    navigate(`/home/transactions/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -35,7 +35,7 @@ const ListPage = () => {
   };
 
   return (
-    <div>
+    <div className='container d-flex flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Lista de Transações</h2>
       <Table data={items} onEdit={handleEdit} onDelete={handleDelete} />
     </div>

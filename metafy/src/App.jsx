@@ -10,83 +10,36 @@ import CategoriaCreatePage from "./pages/CategoriaCreatePage";
 import EditPage from "./pages/EditPage";
 import ListCategoryPage from "./pages/ListCategoryPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
-import "bootswatch/dist/united/bootstrap.min.css";
+import "bootswatch/dist/lux/bootstrap.min.css";
+import CreateMeta from "./pages/CreateMeta";
+import Login from "./components/Login";
+import Home from "./pages/Home";
+import UserRegistration from "./pages/UserRegistration";
 
 const App = () => {
-  const [items, setItems] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleAddOrUpdate = (data) => {
-    if (editingItem) {
-      setItems(
-        items.map((item) =>
-          item.id === editingItem.id ? { ...item, ...data } : item
-        )
-      );
-      setEditingItem(null);
-    } else {
-      setItems([...items, { ...data, id: Date.now() }]);
-    }
-  };
-
-  const handleEdit = (id) => {
-    const itemToEdit = items.find((item) => item.id === id);
-    setEditingItem(itemToEdit);
-  };
-
-  const handleDelete = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+  const handleLogin = (formData) => {
+    // Aqui você pode adicionar a lógica de autenticação, se necessário.
+    // Suponhamos que a autenticação tenha sido bem-sucedida:
+    setIsAuthenticated(true);
   };
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            Metafy - Gestão Financeira
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarColor01"
-            aria-controls="navbarColor01"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarColor01">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/createTransaction">
-                  Adicionar Transação
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/categories">
-                  Listar Categorias
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/categories/create">
-                  Adicionar Categoria
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
       <Routes>
-        <Route path="/" element={<ListPage />} />
-        <Route path="/createTransaction" element={<CreatePage />} />
-        <Route path="/categories" element={<ListCategoryPage />} />
-        <Route path="/categories/create" element={<CategoriaCreatePage />} />
-        <Route path="/transactions/edit/:id" element={<EditPage />} />
-        <Route path="/categories/edit/:id" element={<EditCategoryPage />} />
+        {/* Rota de Cadastro sempre acessível */}
+        <Route path="/cadastro" element={<UserRegistration />} />
+
+        {/* Se não estiver autenticado, exibe Login */}
+        {!isAuthenticated ? (
+          <Route path="/*" element={<Login onSubmit={handleLogin} />} />
+        ) : (
+          <>
+            <Route path="/*" element={<Home />} />
+          </>
+        )}
       </Routes>
-      <Footer />
     </div>
   );
 };

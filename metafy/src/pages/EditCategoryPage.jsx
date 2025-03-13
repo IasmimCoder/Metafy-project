@@ -31,7 +31,7 @@ const EditCategoryPage = () => {
   const handleSubmit = async (data) => {
     // Aqui você pode enviar os dados para a API para salvar as mudanças
     const response = await api.put(`/categories/edit/${id}`, data)
-    navigate('/');
+    navigate('/home');
   };
 
   if (loading) {
@@ -43,7 +43,7 @@ const EditCategoryPage = () => {
   }
 
   return (
-    <div>
+    <div className='container  flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Editar Categoria</h2>
       {initialData ? (
         <FormCategoria onSubmit={handleSubmit} initialData={initialData} />

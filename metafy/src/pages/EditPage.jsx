@@ -31,7 +31,7 @@ const EditPage = () => {
   const handleSubmit = async (data) => {
     // Aqui você pode enviar os dados para a API para salvar as mudanças
     const response = await api.put(`/transactions/edit/${id}`, data)
-    navigate('/');
+    navigate('/home');
   };
 
   if (loading) {
@@ -43,7 +43,7 @@ const EditPage = () => {
   }
 
   return (
-    <div>
+    <div className='container d-flex flex-column py-5 justify-content align-items-center vh-100'>
       <h2>Editar Transação</h2>
       {initialData ? (
         <Form onSubmit={handleSubmit} initialData={initialData} />
