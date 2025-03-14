@@ -1,5 +1,8 @@
 package com.ifpb.Metafy.dto;
 
+import java.util.List;
+
+import com.ifpb.Metafy.model.Role;
 import com.ifpb.Metafy.model.User;
 
 import lombok.Getter;
@@ -12,6 +15,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String creationDate;  // Formatado para apresentação
+    private List<Role> roles;
 
     // Construtor para conversão de entidade para DTO
     public UserDTO(User user) {
@@ -20,4 +24,5 @@ public class UserDTO {
         this.email = user.getEmail();
         this.creationDate = user.getCreationDate().toString(); 
     }
+
 }
