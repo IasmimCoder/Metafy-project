@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");  // Permitir todos os cabeçalhos
     }
 
-    @Bean
+    @Bean(name = "webPasswordEncoder")
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

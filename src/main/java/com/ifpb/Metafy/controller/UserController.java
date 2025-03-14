@@ -1,7 +1,7 @@
 package com.ifpb.Metafy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +31,7 @@ public class UserController {
     // private RoleService RoleService;
 
     @Autowired
+    @Qualifier("securityPasswordEncoder")  // 🔹 Diz ao Spring qual Bean usar
     private PasswordEncoder passwordEncoder;
 
     // @GetMapping("/listarUsuarios")
