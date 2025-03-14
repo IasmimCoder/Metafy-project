@@ -15,3 +15,9 @@ jwt:
   expirationMs: 1800000
 server:
   port: 8080
+
+main:
+  allow-bean-definition-overriding: true
+test:
+  cache:
+    enable: false
