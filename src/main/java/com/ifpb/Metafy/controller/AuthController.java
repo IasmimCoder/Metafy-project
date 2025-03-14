@@ -1,64 +1,64 @@
 package com.ifpb.Metafy.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ifpb.Metafy.dto.TokenDTO;
-import com.ifpb.Metafy.dto.UserDTO;
-import com.ifpb.Metafy.model.Login;
-import com.ifpb.Metafy.service.JwtService;
-import com.ifpb.Metafy.service.UserService;
-
-import jakarta.servlet.http.HttpServletRequest;
+import com.ifpb.Metafy.config.JwtUtil;
+import com.ifpb.Metafy.model.User;
+import com.ifpb.Metafy.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-    private UserService userService;
-    private JwtService jwtService;
+    @Autowired
+    @Qualifier("securityPasswordEncoder")  // 🔹 Diz ao Spring qual Bean usar
+    private PasswordEncoder passwordEncoder;
 
-    public AuthController(
-			AuthenticationManager authenticationManager,
-			JwtService jwtService,
-			UserService userService) {
-       this.authenticationManager = authenticationManager;
-       this.jwtService = jwtService;
-       this.userService = userService;
-   }
-   
-   @PostMapping("/login")
-   public ResponseEntity<?> login(@RequestBody Login login) {
-		try {
-	        Authentication authentication = authenticationManager.authenticate(
-	                new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword()));
-	
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        String token = jwtService.generateToken(authentication);
-	
-	        UserDTO userdto = userService.findDtoByEmail(login.getEmail());
-	        TokenDTO tokendto = new TokenDTO(token, userdto);
-	
-	        return ResponseEntity.ok(tokendto);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-   }
+    @Autowired
+    private UserRepository userRepository;
 
-   @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
-    // Remove a autenticação do usuário atual
-        SecurityContextHolder.clearContext(); 
-        return ResponseEntity.ok("Logout realizado com sucesso!");
-    }
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        User userOpt = userRepository.findByEmail(loginRequest.getUsername());
+
+        // Aqui você verifica as credenciais do usuário
+        if (userOpt.getEmail().equals(loginRequest.getUsername()) && passwordEncoder.matches(loginRequest.getPassword(), userOpt.getPassword())) {
+                    return jwtUtil.generateToken(loginRequest.getUsername());
+                } else {
+                    throw new RuntimeException("Invalid credentials");
+                }
+            }
+        }
+        
+        class LoginRequest {
+            private String username;
+            private String password;
+        
+            // Construtor padrão (necessário para a desserialização do JSON)
+            public LoginRequest() {}
+        
+            // Getters
+            public String getUsername() {
+                return username;
+            }
+        
+            public String getPassword() {
+                return password;
+            }
+        
+            // Setters
+            public void setUsername(String username) {
+                this.username = username;
+            }
+        
+            public void setPassword(String password) {
+                this.password = password;
+            }
+        }        
 
 
-}

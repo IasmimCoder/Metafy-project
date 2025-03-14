@@ -10,9 +10,7 @@ spring:
   h2:
     console:
       enabled: true
-jwt:
-  secret: J1FKivsYXVX1sVsV+K==IFPB==MONTEIRO==ads=eh=top==R/0Fs0tLJqHsK8a3OT3hC/WZo=
-  expirationMs: 1800000
+
 server:
   port: 8080
 
