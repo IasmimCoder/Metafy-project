@@ -67,6 +67,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+             <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -95,7 +96,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>5.7.5</version> <!-- Certifique-se de estar usando uma versão compatível -->
+            <version>6.4.3</version>
         </dependency>
 
     
