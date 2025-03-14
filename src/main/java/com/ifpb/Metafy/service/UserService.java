@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ifpb.Metafy.dto.UserDTO;
+import com.ifpb.Metafy.model.Role;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
@@ -71,5 +72,13 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
     }
+
+    public UserDTO findDtoByEmail(String email) {
+		UserDTO user = userRepository.findDtoByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+		List<Role> roles = userRepository.listRole(user.getId());
+		user.setRoles(roles);
+		return user;
+	}
 }
 
