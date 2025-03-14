@@ -18,12 +18,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    // @Autowired
+    // private RoleService RoleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // @GetMapping("/listarUsuarios")
     // public ResponseEntity<Page<UserDTO>> getPaginatedUsers(
@@ -78,8 +86,14 @@ public class UserController {
 
     @PostMapping("/cadastrarUsuario")
     public ModelAndView createUser(@RequestBody User user) {
+        encriptPassword(user);
         userService.createUser(user);
         return new ModelAndView("redirect:/");
+    }
+
+    private void encriptPassword(User user){
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
     }
 
     @GetMapping("/{id}")

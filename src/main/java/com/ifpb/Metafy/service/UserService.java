@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ifpb.Metafy.dto.UserDTO;
+import com.ifpb.Metafy.model.Role;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
@@ -12,10 +13,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -63,5 +67,18 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username);
+    }
+
+    public UserDTO findDtoByEmail(String email) {
+		UserDTO user = userRepository.findDtoByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+		List<Role> roles = userRepository.listRole(user.getId());
+		user.setRoles(roles);
+		return user;
+	}
 }
 
