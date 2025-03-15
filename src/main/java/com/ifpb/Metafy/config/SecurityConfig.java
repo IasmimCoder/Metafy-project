@@ -17,30 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/api/users/cadastrarUsuario", "/").permitAll()
-                .anyRequest().authenticated()
-            )
-            .exceptionHandling(exception -> exception.accessDeniedPage("/accessdenied"))
-            .addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
-    }
-
-    @Bean(name = "securityPasswordEncoder")
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

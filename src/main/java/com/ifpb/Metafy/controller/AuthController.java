@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifpb.Metafy.config.JwtUtil;
+import com.ifpb.Metafy.exceptions.UnauthorizedException;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
@@ -30,7 +31,7 @@ public class AuthController {
         if (userOpt.getEmail().equals(loginRequest.getUsername()) && passwordEncoder.matches(loginRequest.getPassword(), userOpt.getPassword())) {
                     return jwtUtil.generateToken(loginRequest.getUsername());
                 } else {
-                    throw new RuntimeException("Invalid credentials");
+                    throw new UnauthorizedException("Invalid credentials");
                 }
             }
         }

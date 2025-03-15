@@ -53,5 +53,9 @@ public class User implements UserDetails {
         return email;
     }
 
+    public String[] arrayRoles() {
+        return roles.toArray(new String[0]); // Converte a lista para array
+    }
 }
+    
 
