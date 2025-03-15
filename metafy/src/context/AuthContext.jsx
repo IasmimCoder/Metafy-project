@@ -1,43 +1,33 @@
-import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";  // Importe o hook de autenticação
+// context/AuthContext.js
+import React, { createContext, useContext, useState } from "react";
 
-const Login = () => {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
-  const { login } = useAuth();  // Obtenha a função de login
-  const [error, setError] = useState("");
+const AuthContext = createContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // Verifique as credenciais (por exemplo, chamando uma API)
-    if (credentials.username === "admin" && credentials.password === "admin") {
-      login(); // Chama a função login
-    } else {
-      setError("Credenciais inválidas");
-    }
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+  const login = (token, userData) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setIsAuthenticated(true);
+    setUser(userData);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsAuthenticated(false);
+    setUser(null);
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={credentials.username}
-          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-        />
-        <button type="submit">Login</button>
-        {error && <div>{error}</div>}
-      </form>
-    </div>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
-
-export default Login;

@@ -1,0 +1,59 @@
+/* Estilo padrão (modo escuro) */
+.navbar {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    margin: 0;
+}
+
+/* Estilo para o tema claro */
+.navbar.light {
+    background-color: #ffffff; /* Fundo branco */
+    color: black; /* Texto preto */
+}
+
+/* Links padrão */
+.navbar a {
+    text-decoration: none;
+    color: inherit; /* Usa a cor do tema */
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #646cff;
+}
+
+/* Ajuste no layout da navbar para garantir que os links fiquem visíveis */
+.navbar .navbar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Ajuste o espaço entre os links */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.navbar .navbar-nav li {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para o botão de alternância de tema */
+.theme-toggle-btn {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    color: #646cff;
+}

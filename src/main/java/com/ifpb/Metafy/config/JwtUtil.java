@@ -51,7 +51,7 @@ public class JwtUtil {
     }
 
     // Extrai a data de expiração do token
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
