@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer";  // Importando corretamente o Footer
 import ListPage from "../pages/ListPage";
-import CreatePage from "../pages/CreatePage";
+import CreatePage from "./CreateTransactionPage";
 import CategoriaCreatePage from "../pages/CategoriaCreatePage";
 import EditPage from "../pages/EditPage";
 import ListCategoryPage from "../pages/ListCategoryPage";
@@ -39,17 +38,22 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />  {/* Usando o Navbar como componente separado */}
-      <Routes>
-        <Route path="/home/" element={<ListPage />} />
-        <Route path="/home/createTransaction" element={<CreatePage />} />
-        <Route path="/home/categories" element={<ListCategoryPage />} />
-        <Route path="/home/categories/create" element={<CategoriaCreatePage />} />
-        <Route path="/home/transactions/edit/:id" element={<EditPage />} />
-        <Route path="/home/categories/edit/:id" element={<EditCategoryPage />} />
-        <Route path="/home/goals/create" element={<CreateMeta />} />
-      </Routes>
+      
+      <div className="flex-grow-1 pb-5">  {/* Aumentando o padding inferior */}
+        <Routes>
+          <Route path="/home/" element={<ListPage />} />
+          <Route path="/home/createTransaction" element={<CreatePage />} />
+          <Route path="/home/categories" element={<ListCategoryPage />} />
+          <Route path="/home/categories/create" element={<CategoriaCreatePage />} />
+          <Route path="/home/transactions/edit/:id" element={<EditPage />} />
+          <Route path="/home/categories/edit/:id" element={<EditCategoryPage />} />
+          <Route path="/home/goals/create" element={<CreateMeta />} />
+        </Routes>
+      </div>
+
+      {/* O Footer aqui */}
       <Footer />
     </div>
   );

@@ -1,4 +1,6 @@
-/* Estilo padrão (modo escuro) */
+/* Navbar.css */
+
+/* Estilo padrão da navbar */
 .navbar {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -6,33 +8,65 @@
     left: 0;
     z-index: 1000;
     margin: 0;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Estilo para o tema claro */
-.navbar.light {
-    background-color: #ffffff; /* Fundo branco */
-    color: black; /* Texto preto */
+/* Define cores para cada tema */
+body[data-theme="light"] .navbar {
+    background-color: var(--navbar-light);
+    color: var(--text-light);
 }
 
-/* Links padrão */
+body[data-theme="dark"] .navbar {
+    background-color: var(--navbar-dark);
+    color: var(--text-dark);
+}
+
+/* Classes para compatibilidade com Bootstrap */
+.bg-light {
+    background-color: var(--navbar-light) !important;
+    color: var(--text-light) !important;
+}
+
+.bg-dark {
+    background-color: var(--navbar-dark) !important;
+    color: var(--text-dark) !important;
+}
+
+/* Links da navbar */
 .navbar a {
     text-decoration: none;
-    color: inherit; /* Usa a cor do tema */
-    font-size: 1.2rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 5px; /* Efeito mais suave */
 }
 
-.navbar a:hover {
-    color: #646cff;
+/* Hover nos links - Agora com mais contraste */
+body[data-theme="light"] .navbar a:hover {
+    color: var(--primary-color);
+    background-color: var(--navbar-light-hover);
 }
 
-/* Ajuste no layout da navbar para garantir que os links fiquem visíveis */
+body[data-theme="dark"] .navbar a:hover {
+    color: var(--primary-color);
+    background-color: var(--navbar-dark-hover);
+}
+
+/* Ajuste para seguir o tema */
+body[data-theme="light"] .navbar a {
+    color: var(--text-light);
+}
+
+body[data-theme="dark"] .navbar a {
+    color: var(--text-dark);
+}
+
+/* Layout da navbar */
 .navbar .navbar-nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px; /* Ajuste o espaço entre os links */
+    gap: 30px;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -43,11 +77,10 @@
     align-items: center;
 }
 
-/* Estilo para o botão de alternância de tema */
+/* Estilo do botão de alternância de tema */
 .theme-toggle-btn {
     background-color: transparent;
     border: none;
-    color: inherit;
     font-size: 1rem;
     cursor: pointer;
     padding: 8px 12px;
@@ -55,5 +88,24 @@
 }
 
 .theme-toggle-btn:hover {
-    color: #646cff;
+    color: var(--primary-color);
+}
+
+/* Navbar.css */
+
+/* Estilo do botão de alternância de tema */
+.theme-toggle-btn {
+    background-color: transparent; /* Fundo transparente */
+    border: 0px solid var(--primary-color); /* Borda com a cor primária */
+    color: var(--primary-color); /* Cor do texto com a cor primária */
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--primary-color); /* Fundo primário no hover */
+    color: white; /* Cor do texto branca no hover */
 }

@@ -3,6 +3,8 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext"; // Importando o ThemeContext
+import { FaSun, FaMoon } from "react-icons/fa"; // Importando ícones do Font Awesome
+
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -58,8 +60,9 @@ const Navbar = () => {
             )}
           </ul>
           {/* Botão de alternância de tema */}
-          <button className="btn btn-secondary ms-2" onClick={toggleTheme}>
-            {theme === "light" ? "Dark Mode" : "Light Mode"}
+          <button className="btn theme-toggle-btn ms-2" onClick={toggleTheme}>
+            {theme === "light" ? <FaMoon /> : <FaSun />} {/* Ícones de Lua e Sol */}
+            {theme === "light" ? " Dark Mode" : " Light Mode"}
           </button>
         </div>
       </div>
