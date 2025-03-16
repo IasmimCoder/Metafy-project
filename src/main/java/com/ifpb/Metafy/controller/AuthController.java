@@ -12,13 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifpb.Metafy.config.JwtUtil;
-import com.ifpb.Metafy.dto.UserDTO;
 import com.ifpb.Metafy.dto.request.LoginRequest;
 import com.ifpb.Metafy.dto.response.LoginResponse;
 import com.ifpb.Metafy.dto.response.UserResponseDTO;
 import com.ifpb.Metafy.exceptions.UnauthorizedException;
-import com.ifpb.Metafy.mapper.UserMapper;
-import com.ifpb.Metafy.model.User;
 
 @RestController
 @RequestMapping("/auth")
