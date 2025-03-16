@@ -28,8 +28,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
+        String userEmail = getAuthenticatedUserEmail();
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(id, userEmail);
+        if (categoryResponseDTO == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null); // Se a categoria não pertencer ao usuário
+        }
+        return ResponseEntity.ok(categoryResponseDTO);
     }
 
     @PostMapping
@@ -40,8 +45,14 @@ public class CategoryController {
 
 
     @PutMapping("/{id}")
-    public CategoryResponseDTO updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return categoryService.updateCategory(id, category);
+    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        String userEmail = getAuthenticatedUserEmail();
+        try {
+            CategoryResponseDTO updatedCategory = categoryService.updateCategory(id, category, userEmail);
+            return ResponseEntity.ok(updatedCategory);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")

@@ -11,6 +11,7 @@ import com.ifpb.Metafy.dto.response.UserResponseDTO;
 import com.ifpb.Metafy.exceptions.NotFoundException;
 import com.ifpb.Metafy.exceptions.UnauthorizedException;
 import com.ifpb.Metafy.mapper.CategoryMapper;
+import com.ifpb.Metafy.mapper.UserMapper;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
@@ -67,5 +68,10 @@ public class AuthService {
         } else {
             throw new UnauthorizedException("Invalid credentials");
         }
+    }
+
+    public UserResponseDTO getUserByUsername(String username) {
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
+        return UserMapper.toUserResponseDTO(user);
     }
 }

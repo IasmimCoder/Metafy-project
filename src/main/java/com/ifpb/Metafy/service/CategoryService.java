@@ -35,8 +35,17 @@ public class CategoryService {
     }
 
     // Busca uma categoria por ID
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+    public CategoryResponseDTO getCategoryById(Long id, String email) {
+        User user = userRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+
+        if (!category.getUser().equals(user)) {
+            throw new RuntimeException("Você não tem permissão para acessar esta categoria");
+        }
+
+        return CategoryMapper.toCategoryResponseDTO(category);
     }
 
     // // Busca uma categoria por nome
@@ -55,12 +64,20 @@ public class CategoryService {
     }
 
     // Atualiza uma categoria existente
-    public CategoryResponseDTO updateCategory(Long id, Category categoryDetails) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        category.setName(categoryDetails.getName());
-        category.setDescription(categoryDetails.getDescription());
-        Category updatedCategory = categoryRepository.save(category);
-        return CategoryMapper.toCategoryResponseDTO(updatedCategory);
+    public CategoryResponseDTO updateCategory(Long id, Category category, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        if (!existingCategory.getUser().equals(user)) {
+            throw new RuntimeException("Você não tem permissão para editar esta categoria");
+        }
+
+        existingCategory.setName(category.getName());
+        categoryRepository.save(existingCategory);
+        
+        return CategoryMapper.toCategoryResponseDTO(existingCategory);
     }
 
     // Deleta uma categoria por ID
