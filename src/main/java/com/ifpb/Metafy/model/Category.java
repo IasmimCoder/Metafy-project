@@ -16,5 +16,9 @@ public class Category {
 
     private String name;
     private String description;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // Relaciona a categoria com um usuário
+    private User user;
 }
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ifpb.Metafy.dto.UserDTO;
+import com.ifpb.Metafy.exceptions.NotFoundException;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
@@ -24,8 +25,6 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     //funciona??
-
-    
 
     public Page<UserDTO> getUsersDTO(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
@@ -69,7 +68,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username);
+        return userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
     }
 }
 

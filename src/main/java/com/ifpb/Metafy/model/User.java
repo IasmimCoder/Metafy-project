@@ -33,6 +33,12 @@ public class User implements UserDetails {
     private Date creationDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions; // Lista de transações do usuário
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories; // Lista de categorias do usuário
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals;
     
     @ManyToMany(fetch = FetchType.EAGER)
@@ -56,6 +62,7 @@ public class User implements UserDetails {
     public String[] arrayRoles() {
         return roles.toArray(new String[0]); // Converte a lista para array
     }
+
 }
     
 

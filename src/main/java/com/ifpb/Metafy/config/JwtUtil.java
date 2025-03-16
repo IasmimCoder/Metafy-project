@@ -2,8 +2,11 @@ package com.ifpb.Metafy.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,7 +17,15 @@ import javax.crypto.SecretKeyFactory;
 
 @Component
 public class JwtUtil {
-    private SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);// Defina uma chave secreta forte aqui
+    @Value("${jwt.secret}")
+    private String secretKeyString;
+        
+    private SecretKey secretKey;
+
+    @PostConstruct
+    public void init() {
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKeyString));
+    }
     
     // Gera o token JWT
     public String generateToken(String username) {
@@ -22,13 +33,14 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Expira em 10 horas
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(secretKey)
                 .compact();
     }
 
     // Extrai o username do token JWT
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        return username;
     }
 
     // Extrai uma claim do token
@@ -39,10 +51,15 @@ public class JwtUtil {
 
     // Extrai todas as claims do token
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey) 
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Token inválido ou expirado", e);
+        }
     }
 
     // Verifica se o token é válido

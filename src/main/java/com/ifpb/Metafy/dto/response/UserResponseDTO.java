@@ -1,7 +1,9 @@
 package com.ifpb.Metafy.dto.response;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserResponseDTO {
     private Long id;
@@ -12,9 +14,12 @@ public class UserResponseDTO {
     private Date creationDate;
     private String username;  // Não inclui a senha
 
+    @JsonIgnore // Ignora a serialização de 'categories' ao retornar o usuário
+    private List<CategoryResponseDTO> categories; // Lista de categorias
+
     // Construtores, getters e setters
 
-    public UserResponseDTO(Long id, String name, String cpf, String email, String sexo, Date creationDate, String username) {
+    public UserResponseDTO(Long id, String name, String cpf, String email, String sexo, Date creationDate, String username, List<CategoryResponseDTO> categories) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
@@ -22,9 +27,10 @@ public class UserResponseDTO {
         this.sexo = sexo;
         this.creationDate = creationDate;
         this.username = username;
+        this.categories = categories;
     }
 
-    // Getters e Setters
+    // Getters e setters
     public Long getId() {
         return id;
     }
@@ -79,5 +85,13 @@ public class UserResponseDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<CategoryResponseDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryResponseDTO> categories) {
+        this.categories = categories;
     }
 }

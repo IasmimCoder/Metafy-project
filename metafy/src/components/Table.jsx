@@ -26,7 +26,7 @@ const Table = ({ data, onEdit, onDelete }) => {
               <td>{item.title}</td>
               <td>{item.description}</td>
               <td>{item.type}</td>
-              <td>{item.category.name}</td>
+              <td>{item.categoryName}</td>
               <td>{item.date}</td>
               <td>R$ {item.value}</td>
               <td>

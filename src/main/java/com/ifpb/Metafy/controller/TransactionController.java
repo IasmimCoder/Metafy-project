@@ -1,8 +1,13 @@
 package com.ifpb.Metafy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.ifpb.Metafy.dto.response.TransactionResponseDTO;
 import com.ifpb.Metafy.model.Transaction;
 import com.ifpb.Metafy.service.TransactionService;
 
@@ -16,18 +21,20 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @GetMapping
-    public List<Transaction> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    public ResponseEntity<List<TransactionResponseDTO>> getUserTransactions() {
+        String userEmail = getAuthenticatedUserEmail();
+        return ResponseEntity.ok(transactionService.getUserTransactions(userEmail));
+    }
+
+    @PostMapping
+    public ResponseEntity<TransactionResponseDTO> createTransaction(@RequestBody Transaction transaction) {
+        String userEmail = getAuthenticatedUserEmail();
+        return ResponseEntity.ok(transactionService.createTransaction(transaction, userEmail));
     }
 
     @GetMapping("/{id}")
     public Transaction getTransactionById(@PathVariable Long id) {
         return transactionService.getTransactionById(id);
-    }
-
-    @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionService.createTransaction(transaction);
     }
 
     @PutMapping("/{id}")
@@ -36,8 +43,19 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTransaction(@PathVariable Long id) {
-        transactionService.deleteTransaction(id);
+    public ResponseEntity<?> deleteTransaction(@PathVariable Long id) {
+        String userEmail = getAuthenticatedUserEmail();
+        try {
+            transactionService.deleteTransaction(id, userEmail);
+            return ResponseEntity.ok("Transação deletada com sucesso");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    private String getAuthenticatedUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName(); // Retorna o email do usuário autenticado
     }
 }
 

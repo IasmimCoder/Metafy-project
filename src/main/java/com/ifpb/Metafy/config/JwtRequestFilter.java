@@ -45,14 +45,24 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     usernamePasswordAuthenticationToken
                             .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                } else if (jwtUtil.isTokenExpired(jwt)) {
+                    throw new ServletException("Token expirado");
                 }
             }
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             HttpServletResponse res = (HttpServletResponse) response;
-            res.setStatus(HttpStatus.FORBIDDEN.value());
-            res.getWriter().write(e.getMessage());
+            if (e.getMessage().equals("Token expirado")) {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.getWriter().write("Token expirado. Por favor, faça login novamente.");
+            } else if (e.getMessage().equals("Token inválido")) {
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.getWriter().write("Token inválido. Verifique suas credenciais.");
+            } else {
+                res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                res.getWriter().write("Erro no processamento do token: " + e.getMessage());
+            }
             res.getWriter().flush();
             return;
         }

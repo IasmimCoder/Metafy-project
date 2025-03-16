@@ -8,12 +8,15 @@ import com.ifpb.Metafy.config.JwtUtil;
 import com.ifpb.Metafy.dto.request.LoginRequest;
 import com.ifpb.Metafy.dto.response.LoginResponse;
 import com.ifpb.Metafy.dto.response.UserResponseDTO;
+import com.ifpb.Metafy.exceptions.NotFoundException;
 import com.ifpb.Metafy.exceptions.UnauthorizedException;
+import com.ifpb.Metafy.mapper.CategoryMapper;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.stream.Collectors;
 import java.time.Duration;
 
 @Service
@@ -29,7 +32,7 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
-        User userOpt = userRepository.findByEmail(loginRequest.getUsername());
+        User userOpt = userRepository.findByEmail(loginRequest.getUsername()).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
 
         // Valida se o usuário existe e se a senha está correta
         if (userOpt != null && passwordEncoder.matches(loginRequest.getPassword(), userOpt.getPassword())) {
@@ -55,8 +58,9 @@ public class AuthService {
                 userOpt.getEmail(),
                 userOpt.getSexo(),
                 userOpt.getCreationDate(),
-                userOpt.getUsername()
-            );
+                userOpt.getUsername(),
+                CategoryMapper.toCategoryResponseDTO(userOpt.getCategories()) // Mapeia as categorias diretamente
+                );
 
             // Retorna a resposta com o token, tipo do token, data de expiração, tempo restante e dados do usuário (sem senha)
             return new LoginResponse(token, remainingSeconds, expirationTime, userResponseDTO);
