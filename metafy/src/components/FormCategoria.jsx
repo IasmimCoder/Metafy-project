@@ -1,13 +1,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { useTheme } from "../context/ThemeContext"; // Importando o ThemeContext
 
-const Form = ({ onSubmit, initialData }) => {
-  const [formData, setFormData] = useState({name :'', description:''});
+const FormTransaction = ({ onSubmit, initialData }) => {
+  const { theme } = useTheme(); // Pegando o tema atual
+  const [formData, setFormData] = useState({ name: '', description: '' });
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        name: initialData.name || '',
+        description: initialData.description || '',
+      });
     }
   }, [initialData]);
 
@@ -22,16 +27,42 @@ const Form = ({ onSubmit, initialData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Nome:</label>
-      <input className="form-control mb-3" type="text" name="name" value={formData.name} onChange={handleChange} required />
+    <form
+      onSubmit={handleSubmit}
+      className={`p-4 rounded ${theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}`} // Classe dinâmica para o formulário
+    >
+      <div className="mb-3">
+        <label>Nome:</label>
+        <input
+          className={`form-control ${theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}`} // Aplicando classes dinâmicas aos inputs
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-      <label>Descrição:</label>
-      <input className="form-control mb-3" type='text' name="description" value={formData.description} onChange={handleChange} required />
+      <div className="mb-3">
+        <label>Descrição:</label>
+        <input
+          className={`form-control ${theme === 'dark' ? 'bg-dark text-light' : 'bg-light text-dark'}`} // Aplicando classes dinâmicas aos inputs
+          type="text"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-      <button className="btn btn-primary " type="submit">Salvar</button>
+      <button
+        className={`btn ${theme === 'dark' ? 'btn-light' : 'btn-dark'}`} // Botão também mudando de acordo com o tema
+        type="submit"
+      >
+        Salvar
+      </button>
     </form>
   );
 };
 
-export default Form;
+export default FormTransaction;

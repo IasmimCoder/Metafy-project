@@ -15,7 +15,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userName;
     private String title;
     private String description;
     private String type;
@@ -27,5 +26,9 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // Relaciona a categoria com um usuário
+    private User user;
 }
 
