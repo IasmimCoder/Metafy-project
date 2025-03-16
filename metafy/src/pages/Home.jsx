@@ -4,7 +4,7 @@ import Footer from "../components/Footer";  // Importando corretamente o Footer
 import ListPage from "../pages/ListPage";
 import CreatePage from "./CreateTransactionPage";
 import CategoriaCreatePage from "../pages/CategoriaCreatePage";
-import EditPage from "../pages/EditPage";
+import EditTransactionPage from "./EditTransactionPage";
 import ListCategoryPage from "../pages/ListCategoryPage";
 import EditCategoryPage from "../pages/EditCategoryPage";
 import "bootswatch/dist/lux/bootstrap.min.css";
@@ -47,7 +47,7 @@ const Home = () => {
           <Route path="/home/createTransaction" element={<CreatePage />} />
           <Route path="/home/categories" element={<ListCategoryPage />} />
           <Route path="/home/categories/create" element={<CategoriaCreatePage />} />
-          <Route path="/home/transactions/edit/:id" element={<EditPage />} />
+          <Route path="/home/transactions/edit/:id" element={<EditTransactionPage />} />
           <Route path="/home/categories/edit/:id" element={<EditCategoryPage />} />
           <Route path="/home/goals/create" element={<CreateMeta />} />
         </Routes>

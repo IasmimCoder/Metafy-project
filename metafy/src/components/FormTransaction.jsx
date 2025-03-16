@@ -109,7 +109,7 @@ const FormTransaction = ({ onSubmit, initialData, categories }) => {
   const selectClasses = theme === 'dark' ? 'form-select bg-dark text-light border-light' : 'form-select bg-light text-dark border-dark';
 
   return (
-    <div className={`container d-flex flex-column justify-content-center align-items-center min-vh-100 ${formClasses}`}>
+    <div className={`container d-flex flex-column justify-content-center align-items-center min-vh-100 ${formClasses} mt-4`}>
       <form onSubmit={handleSubmit} className="w-50">
         <div className="mb-3">
           <label htmlFor="title" className="form-label">Título:</label>

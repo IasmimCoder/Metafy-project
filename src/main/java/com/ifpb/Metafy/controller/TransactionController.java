@@ -30,7 +30,7 @@ public class TransactionController {
         return transactionService.createTransaction(transaction);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public Transaction updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
         return transactionService.updateTransaction(id, transaction);
     }

@@ -55,11 +55,19 @@ const ListPage = () => {
   };
 
   const handleDelete = async (id) => {
+    const token = getToken();  // Recuperando o token
+
+    if (!token) {
+      navigate('/login');  // Se não houver token, redireciona para a página de login
+      return;
+    }
+    
     try {
       const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,  // Adicionando o token ao cabeçalho
         },
       });
 

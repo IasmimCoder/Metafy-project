@@ -9,7 +9,10 @@ const FormTransaction = ({ onSubmit, initialData }) => {
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        name: initialData.name || '',
+        description: initialData.description || '',
+      });
     }
   }, [initialData]);
 
