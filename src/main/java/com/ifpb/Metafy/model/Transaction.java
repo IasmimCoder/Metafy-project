@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "transactions")
 @Data
@@ -24,7 +27,8 @@ public class Transaction {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Category category;
 
     @ManyToOne

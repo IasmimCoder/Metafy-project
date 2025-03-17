@@ -62,7 +62,7 @@ public class CategoryController {
             categoryService.deleteCategory(id, userEmail);
             return ResponseEntity.ok("Categoria deletada com sucesso");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

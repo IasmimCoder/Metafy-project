@@ -8,6 +8,7 @@ import com.ifpb.Metafy.mapper.CategoryMapper;
 import com.ifpb.Metafy.model.Category;
 import com.ifpb.Metafy.model.User;
 import com.ifpb.Metafy.repository.CategoryRepository;
+import com.ifpb.Metafy.repository.TransactionRepository;
 import com.ifpb.Metafy.repository.UserRepository;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class CategoryService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public List<CategoryResponseDTO> getUserCategories(String email) {
         User user = userRepository.findByEmail(email)
@@ -91,6 +95,8 @@ public class CategoryService {
         if (!category.getUser().equals(user)) {
             throw new RuntimeException("Acesso negado! Você não pode excluir essa categoria.");
         }
+
+        transactionRepository.updateCategoryToNull(id);
 
         categoryRepository.delete(category);
     }

@@ -33,13 +33,13 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public Transaction getTransactionById(@PathVariable Long id) {
-        return transactionService.getTransactionById(id);
+    public ResponseEntity<TransactionResponseDTO> getTransactionById(@PathVariable Long id) {
+        return  ResponseEntity.ok(transactionService.getTransactionById(id));
     }
 
     @PutMapping("/{id}")
-    public Transaction updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
-        return transactionService.updateTransaction(id, transaction);
+    public ResponseEntity<TransactionResponseDTO> updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
+        return ResponseEntity.ok(transactionService.updateTransaction(id, transaction));
     }
 
     @DeleteMapping("/{id}")
