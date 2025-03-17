@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifpb.Metafy.dto.response.TransactionResponseDTO;
+import com.ifpb.Metafy.model.Goal;
 import com.ifpb.Metafy.model.Transaction;
 import com.ifpb.Metafy.service.TransactionService;
 

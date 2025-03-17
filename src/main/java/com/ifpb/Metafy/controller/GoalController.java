@@ -1,11 +1,15 @@
 package com.ifpb.Metafy.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ifpb.Metafy.model.Goal;
 import com.ifpb.Metafy.model.User;
+import com.ifpb.Metafy.repository.UserRepository;
 import com.ifpb.Metafy.service.GoalService;
 import com.ifpb.Metafy.service.UserService;
 
@@ -21,9 +25,17 @@ public class GoalController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository; // Para buscar o usuário logado
+
     @GetMapping
-    public List<Goal> getAllGoals() {
-        return goalService.getAllGoals();
+    public ResponseEntity<List<Goal>> getUserGoals() {
+        String email = getAuthenticatedUserEmail();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        List<Goal> goals = goalService.getGoalsByUser(user);
+        return ResponseEntity.ok(goals);
     }
 
     @GetMapping("/{id}")
@@ -42,11 +54,9 @@ public class GoalController {
     }
 
     @PostMapping
-    public ModelAndView createGoal(@ModelAttribute Goal goal, Model model) {
-        goalService.createGoal(goal);
-        List<Goal> goals = goalService.getAllGoals();
-        model.addAttribute("goals", goals);
-        return new ModelAndView("goal/listagemGoals");
+    public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) {
+        String userEmail = getAuthenticatedUserEmail();
+        return ResponseEntity.ok(goalService.createGoal(goal, userEmail));
     }
 
     @GetMapping("/editar/{id}")
@@ -63,20 +73,22 @@ public class GoalController {
         return new ModelAndView("goal/listagemGoals"); // Nome do arquivo HTML para listagem
     }
 
-    @PostMapping("/editar/{id}")
-    public ModelAndView updateGoal(@PathVariable Long id, @ModelAttribute Goal goal, Model model) {
-        goalService.updateGoal(id, goal);
-        List<Goal> goals = goalService.getAllGoals();
-        model.addAttribute("goals", goals);
-        return new ModelAndView("goal/listagemGoals");
+    @PutMapping("/{id}")
+    public ResponseEntity<Goal> updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
+        return ResponseEntity.ok(goalService.updateGoal(id, goal));
     }
 
-    @PostMapping("/deletar/{id}")
+    @DeleteMapping("/{id}")
     public ModelAndView deleteGoal(@PathVariable Long id, Model model) {
         goalService.deleteGoal(id);
         List<Goal> goals = goalService.getAllGoals();
         model.addAttribute("goals", goals);
         return new ModelAndView("goal/listagemGoals");
+    }
+
+    private String getAuthenticatedUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName(); // Retorna o email do usuário autenticado
     }
 }
 

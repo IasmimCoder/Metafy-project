@@ -2,8 +2,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 
-const Form = ({ onSubmit, initialData }) => {
-  const [formData, setFormData] = useState({ title: "", description: "", value : 0});
+const FormMeta = ({ onSubmit, initialData }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    goalValue: 0,
+    completed : false
+  });
 
   useEffect(() => {
     if (initialData) {
@@ -28,7 +33,7 @@ const Form = ({ onSubmit, initialData }) => {
         className="form-control mb-3"
         type="text"
         name="title"
-        value={formData.name}
+        value={formData.title}
         onChange={handleChange}
         required
       />
@@ -45,8 +50,8 @@ const Form = ({ onSubmit, initialData }) => {
       <label>Valor da Meta:</label>
       <input
         type="number"
-        name="value"
-        value={formData.value}
+        name="goalValue"
+        value={formData.goalValue}
         onChange={handleChange}
         className="form-control mb-3"
         required
@@ -55,8 +60,8 @@ const Form = ({ onSubmit, initialData }) => {
       <label>Data Início:</label>
       <input
         type="date"
-        name="date_start"
-        value={formData.date}
+        name="startDate" // Corrigido para refletir o nome do backend
+        value={formData.startDate}
         onChange={handleChange}
         className="form-control mb-3"
         required
@@ -65,8 +70,8 @@ const Form = ({ onSubmit, initialData }) => {
       <label>Data final:</label>
       <input
         type="date"
-        name="date_final"
-        value={formData.date}
+        name="deadline" // Corrigido para refletir o nome do backend
+        value={formData.deadline}
         onChange={handleChange}
         className="form-control mb-3"
         required
@@ -79,4 +84,4 @@ const Form = ({ onSubmit, initialData }) => {
   );
 };
 
-export default Form;
+export default FormMeta;

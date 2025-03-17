@@ -13,11 +13,13 @@ public class TransactionResponseDTO {
     private Double value;
     private String type;
     private Date date;
+    private Long goaid;
+    private String goalName;
     private Long categoryId;
     private String categoryName;
 
     // Construtor de conversão de entidade para DTO
-    public TransactionResponseDTO(Long id, String title, String description, Double value, String type, Date date, Long categoryId, String categoryName) {
+    public TransactionResponseDTO(Long id, String title, String description, Double value, String type, Date date, Long categoryId, String categoryName, Long goalId, String goalName) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -26,6 +28,8 @@ public class TransactionResponseDTO {
         this.date = date;
         this.categoryId = categoryId;
         this.categoryName = categoryName;  // Define o nome da categoria
+        this.goaid = goalId;
+        this.goalName = goalName;
     }
 }
 

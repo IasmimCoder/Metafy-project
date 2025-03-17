@@ -1,5 +1,5 @@
-import React from "react";
-import { useTheme } from "../context/ThemeContext"; // Importando o useTheme
+import React from 'react';
+import { useTheme } from "../context/ThemeContext"; // Importando o ThemeContext
 
 const Table = ({ data, onEdit, onDelete }) => {
   const { theme } = useTheme(); // Pegando o tema atual e a função de alternância
@@ -9,28 +9,28 @@ const Table = ({ data, onEdit, onDelete }) => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nome</th>
+          <th>Título</th>
           <th>Descrição</th>
-          <th>Tipo</th>
-          <th>Categoria</th>
-          <th>Meta</th>
-          <th>Data</th>
-          <th>Valor</th>
+          <th>Valor da Meta</th>
+          <th>Valor acumulado</th>
+          <th>Data de Inicio</th>
+          <th>Data Final</th>
+          <th>Completo?</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         {data.length > 0 ? (
           data.map((item) => (
-            <tr key={item.id}>
+            <tr key={item.id} className="table-default">
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.description}</td>
-              <td>{item.type}</td>
-              <td>{item.categoryName}</td>
-              <td>{item.goalName}</td>
-              <td>{item.date}</td>
-              <td>R$ {item.value}</td>
+              <td>{item.goalValue}</td>
+              <td>{item.accumulatedValue}</td>
+              <td>{item.startDate}</td>
+              <td>{item.deadline}</td>
+              <td>{item.completed ? 'Sim' : 'Não'}</td>
               <td>
                 <div className="d-flex gap-2">  {/* Usando flexbox para alinhar os botões */}
                   <button className="btn btn-primary btn-sm me-2" onClick={() => onEdit(item.id)}>
@@ -45,7 +45,7 @@ const Table = ({ data, onEdit, onDelete }) => {
           ))
         ) : (
           <tr>
-            <td colSpan="7">Nenhum registro encontrado</td>
+            <td colSpan="4">Nenhum registro encontrado</td>
           </tr>
         )}
       </tbody>

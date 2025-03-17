@@ -9,6 +9,7 @@ const CreatePage = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { theme } = useTheme(); // Pegando o tema atual
+  const [goals, setGoals] = useState([]);
 
   // Função para pegar o token do localStorage e adicionar no cabeçalho da requisição
   const getToken = () => {
@@ -39,35 +40,47 @@ const CreatePage = () => {
       console.error('Erro ao criar transação:', error);
     }
   };
-
-  // Carregar categorias quando o componente for montado
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       const token = getToken(); // Recupera o token dentro do useEffect
-
+  
       if (!token) {
         navigate('/login');  // Se não houver token, redireciona para a página de login
         return;
       }
-
+  
       try {
-        const response = await fetch('http://localhost:8080/api/categories', {
+        // Buscar categorias
+        const categoriesResponse = await fetch('http://localhost:8080/api/categories', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,  // Adicionando o token ao cabeçalho
+            'Authorization': `Bearer ${token}`,
           },
         });
-        const data = await response.json();
-        setCategories(data); // Supondo que a resposta contenha as categorias
+        const categoriesData = await categoriesResponse.json();
+        setCategories(categoriesData);
+  
+        // Buscar metas
+        const goalsResponse = await fetch('http://localhost:8080/api/goals', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        const goalsData = await goalsResponse.json();
+        setGoals(goalsData);
+  
         setIsLoading(false);
       } catch (error) {
-        console.error('Erro ao carregar categorias:', error);
+        console.error('Erro ao carregar dados:', error);
       }
     };
+  
+    fetchData();
+  }, [navigate]);
 
-    fetchCategories();
-  }, [navigate]);  // Dependência para garantir que a navegação esteja disponível
 
   return (
     <div
@@ -76,7 +89,7 @@ const CreatePage = () => {
       }`}
     >
     <h2 className="mb-5">Adicionar Nova Transação</h2> {/* Adicionando margem inferior */}
-    {isLoading ? <p>Carregando categorias...</p> : <FormTransaction onSubmit={handleCreate} categories={categories} />}
+    {isLoading ? <p>Carregando categorias...</p> : <FormTransaction onSubmit={handleCreate} categories={categories} goals={goals}/>}
     </div>
   );
 };

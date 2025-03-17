@@ -51,6 +51,16 @@ const Navbar = () => {
                 Adicionar Categoria
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/home/goals">
+                Listar Metas
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/home/goals/create">
+                Adicionar Meta
+              </Link>
+            </li>
             {isAuthenticated && (
               <li className="nav-item">
                 <button className="nav-link btn" onClick={handleLogout}>

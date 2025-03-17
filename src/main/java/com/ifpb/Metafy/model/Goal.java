@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Data
@@ -22,6 +25,7 @@ public class Goal {
     
     @ManyToOne(fetch = FetchType.LAZY) // Carregamento sob demanda
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
     
     
@@ -29,12 +33,13 @@ public class Goal {
     private String description;
     private Double goalValue;
     private Double accumulatedValue;
+    private Boolean completed;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
-    
+
 }
 

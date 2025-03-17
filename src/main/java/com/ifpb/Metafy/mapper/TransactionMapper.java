@@ -21,7 +21,9 @@ public class TransactionMapper {
             transaction.getType(),
             transaction.getDate(),
             transaction.getCategory() != null ? transaction.getCategory().getId() : null, // Verificando se a categoria é nula
-            transaction.getCategory() != null ? transaction.getCategory().getName() : null // Verificando se a categoria é nula
+            transaction.getCategory() != null ? transaction.getCategory().getName() : null, // Verificando se a categoria é nula
+            transaction.getGoal() != null ? transaction.getGoal().getId() : null,
+            transaction.getGoal() != null ? transaction.getGoal().getTitle() : null
         );
     }
 

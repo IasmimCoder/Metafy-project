@@ -2,11 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Footer from "../components/Footer";  // Importando corretamente o Footer
 import ListPage from "../pages/ListPage";
+import ListGoalsPage from "./ListGoalsPAge";
 import CreatePage from "./CreateTransactionPage";
 import CategoriaCreatePage from "../pages/CategoriaCreatePage";
 import EditTransactionPage from "./EditTransactionPage";
 import ListCategoryPage from "../pages/ListCategoryPage";
 import EditCategoryPage from "../pages/EditCategoryPage";
+import EditGoalPage from "./EditGoalPage";
 import "bootswatch/dist/lux/bootstrap.min.css";
 import CreateMeta from "../pages/CreateMeta";
 import Navbar from "../components/Navbar";
@@ -49,7 +51,9 @@ const Home = () => {
           <Route path="/home/categories/create" element={<CategoriaCreatePage />} />
           <Route path="/home/transactions/edit/:id" element={<EditTransactionPage />} />
           <Route path="/home/categories/edit/:id" element={<EditCategoryPage />} />
+          <Route path="/home/goals/edit/:id" element={<EditGoalPage />} />
           <Route path="/home/goals/create" element={<CreateMeta />} />
+          <Route path="/home/goals" element={<ListGoalsPage />} />
         </Routes>
       </div>
 

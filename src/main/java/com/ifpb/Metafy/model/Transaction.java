@@ -28,7 +28,13 @@ public class Transaction {
     private Category category;
 
     @ManyToOne
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
+
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false) // Relaciona a categoria com um usuário
     private User user;
+
+    
 }
 
